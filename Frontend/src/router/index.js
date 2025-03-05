@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MoviesView from '../views/MoviesView.vue'
-import MovieDetail from '../components/MoviesDetails.vue' // Import MovieDetail component
+import MovieDetail from '../components/MoviesDetails.vue'
 import ComingSoonView from '../views/ComingSoonView.vue'
 import MyListView from '../views/MyListView.vue'
 import HomeView from '@/views/HomeView.vue'
-import AdminDashboardView from '@/views/AdminDashboardView.vue'
-import cart from '@/components/cart.vue'
+import AdminDashboardView from '../views/AdminDashboardView.vue'
+import cart from '../components/cart.vue'
 
 const routes = [
   {
@@ -41,7 +41,7 @@ const routes = [
   },
   {
     path: '/adminDashboard',
-    name: 'AdminDashboard',
+    name: 'adminDashboard',
     component: AdminDashboardView
   }
 ]

@@ -43,6 +43,7 @@ export default {
       };
 
       try {
+        // Dispatching the signUpUser action from your store
         await this.$store.dispatch("signUpUser", userData);
         alert("Signup successful");
         this.$emit("close-modal");

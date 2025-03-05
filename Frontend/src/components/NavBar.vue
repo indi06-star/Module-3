@@ -11,7 +11,7 @@
       <li><router-link to="/movies">Movies</router-link></li>
       <li><router-link to="/coming-soon">Coming Soon</router-link></li>
       <li><router-link to="/my-list">My List</router-link></li>
-      <li><router-link to="/">AdminDashboard</router-link></li>
+      <li><router-link to="/admindashboard">AdminDashboard</router-link></li>
     </ul>
 
     <!-- Authentication Buttons -->

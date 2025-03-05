@@ -1,55 +1,138 @@
-import { getAllUsers, getUserById as findUserById, signUpUser as signUpSingleUser } from "../model/usersModal.js";
-import bcrypt from "bcrypt";
-import { pool } from "../config/config.js"; 
+import {
+  getAllUsers,
+  getUserById as findUserById,
+  signUpUser as signUpSingleUser,
+  deleteSingleUser,
+  updateUser,
+  resetPassword as resetUserPassword
+} from "../model/usersModal.js";
 
 // Fetch all users
 export const getUsers = async (req, res) => {
-  const users = await getAllUsers();
-  res.json(users);
+  try {
+    const users = await getAllUsers();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
+
 // Fetch a single user by ID
 export const getUserById = async (req, res) => {
-  const user = await findUserById(req.params.user_id);
-  if (!user) {
-    return res.status(404).json({ error: "User not found" });
+  try {
+    const { user_id } = req.params;
+    const user = await findUserById(user_id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const user_role = user.email.endsWith("@StreamX.com") ? "admin" : "user";
+    res.status(200).json({ ...user, user_role });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-  // Determine if the user is an admin based on email 
-  const user_role = user.email.endsWith("@StreamX.com") ? "admin" : "user";
-  res.json({ ...user, user_role });
 };
 
 // Sign up a new user
 export const signUpUser = async (req, res) => {
-  const { username, email, phone_number, password } = req.body;
-  const newUser = await signUpSingleUser(username, email, phone_number, password);
+  try {
+    const { username, email, phone_number, password } = req.body;
+    const newUser = await signUpSingleUser(username, email, phone_number, password);
 
-  res.json({
-    message: "User signed up successfully",
-    user: {
-      user_id: newUser.user_id,
-      username,
-      email,
-      phone_number,
-      user_role: newUser.user_role,
-    },
-  });
+    res.status(201).json({
+      message: "User signed up successfully",
+      user: {
+        user_id: newUser.user_id,
+        username,
+        email,
+        phone_number,
+        user_role: newUser.user_role,
+      },
+    });
+  } catch (error) {
+    console.error("Error signing up user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
-// Reset password functionality
+
+// Get a single user by user_id
+export const getUser = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const user = await findUserById(user_id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+// Delete a single user by user_id
+export const deleteUser = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const result = await deleteSingleUser(user_id);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+// Update an existing user by user_id
+export const patchUser = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const updateData = req.body;
+    const result = await updateUser(user_id, updateData);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "User not found or no changes made" });
+    }
+
+    res.status(200).json({ message: "User updated successfully" });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+// Reset user password
 export const resetPassword = async (req, res) => {
-  const { email, newPassword } = req.body;
+  try {
+    const { email, newPassword } = req.body;
 
-  if (!email || !newPassword) {
-    return res.status(400).json({ error: "Email and new password are required" });
+    if (!email || !newPassword) {
+      return res.status(400).json({ message: "Email and new password are required" });
+    }
+
+    await resetUserPassword(email, newPassword);
+
+    res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    console.error("Error resetting password:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
-  const query = "UPDATE users SET password_hash = ? WHERE email = ?";
-  const [result] = await pool.query(query, [hashedPassword, email]);
-
-  if (result.affectedRows === 0) {
-    return res.status(404).json({ error: "User not found" });
-  }
-
-  res.json({ message: "Password reset successfully" });
 };
-//Login code 
+////login video
+
+export const loginController =(req,res)=>{
+  res.status(200).send({message:'user logged in successfully'})
+};
+export const postUser = async(req,res)=>{
+  req.body.password_hashed = await hash(req.body.password_hashed,10)
+  res.status(200).send({ message:'A user was added succesfully',users:await postUser(req.body)})
+}

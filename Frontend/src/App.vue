@@ -37,7 +37,7 @@ export default {
     SignUp,
     MoviesDetails,
     AdminDashboardView,
-    cart
+    cart,
   },//////////IF YOU WORKING WITH THE LOGIN ONLY EDIT THIS CODE IN THE APP.VUE PLUS LOGIN COMPONENT AND STORE FOR FRONTEND 
   data() {
     return {
