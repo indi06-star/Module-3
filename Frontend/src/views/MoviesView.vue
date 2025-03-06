@@ -1,72 +1,74 @@
 <template>
-  <section class="movies-view">
-    <h1>All Movies</h1>
-
-    <div class="movie-cards">
-      <div 
+  <div class="movies-view">
+    <div v-if="loading">Loading Movies...</div>
+    <div v-else class="movie-cards">
+      <router-link
+        v-for="movie in movies"
+        :key="movie.movie_id"
+        :to="{ name: 'movie-details', params: { id: movie.movie_id } }"
         class="movie-card"
-        v-for="(movie, index) in allMovies"
-        :key="index"
       >
-        <router-link :to="'/movies/' + movie.title" class="movie-card-link">
-          <img :src="require(`@/assets/${movie.image}`)" class="movie-img" :alt="movie.title" />
-          <p class="movie-title">{{ movie.title }}</p>
-        </router-link>
-      </div>
+        <img :src="movie.img_link" :alt="movie.title" class="movie-img" />
+        <p class="movie-title">{{ movie.title }}</p>
+      </router-link>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-  data() {
-    return {
-      allMovies: [
-        { title: "Journey 2", image: "trending.jpeg" },
-        { title: "The Joker", image: "trending3.webp" },
-        { title: "Diary of a mad black women", image: "trends.jpeg" },
-        { title: "Mufasa", image: "trending4.jpg" },
-        { title: "Me Before You", image: "recommeded.jpg" },
-        { title: "Smile", image: "recommended2.jpg" },
-        { title: "Moana 2", image: "recommeded3.jpeg" },
-        { title: "The Marvels", image: "recommended4.jpg" },
-      ]
-    };
+  computed: {
+    ...mapGetters(['movies', 'loading']),
+  },
+  mounted() {
+    if (!this.movies || this.movies.length === 0) {
+      this.$store.dispatch('getData');
+    }
   },
 };
 </script>
 
 <style scoped>
 .movies-view {
-  padding: 40px;
-  background-color: black;
-  color: white;
-  text-align: center;
+  padding: 20px;
+  background-color: #121212;
+  color: #fff;
+  min-height: 100vh;
 }
 
 .movie-cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  gap: 30px;
+  gap: 20px;
 }
 
 .movie-card {
-  width: 250px;
   text-align: center;
-  background-color: #222;
-  border-radius: 10px;
+  width: 200px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #1e1e1e;
+  border-radius: 8px;
   padding: 10px;
 }
 
-.movie-card img {
+.movie-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.movie-img {
   width: 100%;
-  border-radius: 10px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 .movie-title {
-  color: white;
-  margin-top: 10px;
   font-size: 16px;
+  font-weight: bold;
 }
 </style>

@@ -21,16 +21,15 @@ export const getUserById = async (user_id) => {
   }
 };
 
-// Function to sign up a new user
 export const signUpUser = async (username, email, phone_number, password) => {
   try {
     // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
 
     const query = "INSERT INTO users (username, password_hash, email, phone_number) VALUES (?, ?, ?, ?)";
     const [result] = await pool.query(query, [username, hashedPassword, email, phone_number]);
 
-    // Determine the role based on email 
+    // Determine the role based on email
     const user_role = email.endsWith("@StreamX.com") ? "admin" : "user";
 
     await pool.query("UPDATE users SET user_role = ? WHERE user_id = ?", [user_role, result.insertId]);
@@ -41,7 +40,6 @@ export const signUpUser = async (username, email, phone_number, password) => {
     throw error;
   }
 };
-
 // Function to update an existing user by user_id
 export const updateUser = async (user_id, updateData) => {
   try {
@@ -71,39 +69,12 @@ export const deleteSingleUser = async (user_id) => {
     throw error;
   }
 };
-
-// Reset password functionality
-export const resetPassword = async (email, newPassword) => {
-  if (!email || !newPassword) {
-    throw new Error("Email and new password are required");
-  }
-
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
-  const query = "UPDATE users SET password_hash = ? WHERE email = ?";
-  const [result] = await pool.query(query, [hashedPassword, email]);
-
-  if (result.affectedRows === 0) {
-    throw new Error("User not found");
-  }
-
-  return { message: "Password reset successfully" };
-};
-
-// Find user by email function
 export const findUserByEmail = async (email) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
-
-    if (rows.length === 0) {
-      return null;  
-    }
-
-    return rows[0]; 
+    const [rows] = await pool.query('SELECT user_id, username, password_hash, email FROM users WHERE email = ?', [email]); // Include password_hash
+    return rows;
   } catch (error) {
-    throw error;
+    console.error("Error in findUserByEmail:", error);
+    return []; // Return an empty array on error to prevent further issues
   }
 };
-export const postUser=async(user)=>{
-  await pool.query('INSERT INTO users SET ? ',[user])
-  return await getAllUsers()
-}

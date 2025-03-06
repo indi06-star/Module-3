@@ -3,7 +3,16 @@ import { getMovies, deleteMovie, postMovies, patchMovie, getMovieById } from '..
 
 const router = express.Router();
 
-// Movies Routes
+
+///movies page
+// router.get('/' , getMovies);
+// Route to get a single movie by ID
+// router.get('/:movie_id', getSingleMovie);
+
+
+
+
+// Movies Routes for admin
 router.get('/', getMovies); // Get all movies
 router.get('/:movie_id', getMovieById); // Get movie by movie_id
 router.delete('/:movie_id', deleteMovie); // Corrected: Delete movie by movie_id

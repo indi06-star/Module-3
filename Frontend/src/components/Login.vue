@@ -12,11 +12,11 @@
         />
       </div>
       <div class="form-group">
-        <label for="password">Password:</label>
+        <label for="password_hash">Password:</label>
         <input
           type="password"
-          id="password"
-          v-model="password_hashed"
+          id="password_hash"
+          v-model="password_hash"
           placeholder="Enter your password"
           required
         />
@@ -31,29 +31,38 @@
 
 <script>
 export default {
-  
-  methods: {
-    // Method to toggle the login form visibility (optional)
-    change() {
-      this.showLogin = !this.showLogin;
+  data() {
+    return {
+      email: '',
+      password_hash: '',
+    };
+  },
+  computed: {
+    errorMessage() {
+      return this.$store.getters.errorMessage;
     },
+  },
+  methods: {
     async loginMethod() {
-      await this.$store.dispatch('login', this.login);
-      await this.$router.push('/');
-    }
-  }
+      await this.$store.dispatch('loginUser', {
+        email: this.email,
+        password: this.password_hash, // Corrected to 'password'
+      });
+      if (this.$store.getters.token) {
+        await this.$router.push('/');
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
 .login-container {
-  width: 100%;
-  max-width: 400px;
-  margin: auto;
+  width: 300px;
+  margin: 50px auto;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 .form-group {
@@ -62,15 +71,16 @@ export default {
 
 label {
   display: block;
-  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-input {
+input[type="email"],
+input[type="password"] {
   width: 100%;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  box-sizing: border-box;
 }
 
 button {
@@ -79,16 +89,16 @@ button {
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
-button:hover {
-  background-color: #0056b3;
+.button:hover{
+    background-color: #0056b3;
 }
 
 .error-message {
   color: red;
-  font-size: 14px;
+  margin-top: 10px;
 }
 </style>

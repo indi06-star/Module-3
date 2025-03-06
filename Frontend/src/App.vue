@@ -2,17 +2,14 @@
   <div id="app">
     <NavBar @open-auth-modal="openAuthModal" />
     <router-view />
-    
-    <!-- Authentication Modal -->
+
     <div v-if="showAuthModal" class="modal-overlay" @click.self="closeAuthModal">
       <div class="modal-content">
         <button class="close-btn" @click="closeAuthModal">✖</button>
-        
-        <!-- Login Form -->
+
         <Login v-if="authType === 'login'" @close-modal="closeAuthModal" />
-        
-        <!-- SignUp Form -->
-        <SignUp v-if="authType === 'signup'" @close-modal="closeAuthModal" />   
+
+        <SignUp v-if="authType === 'signup'" @close-modal="closeAuthModal" />
       </div>
     </div>
   </div>
@@ -38,7 +35,7 @@ export default {
     MoviesDetails,
     AdminDashboardView,
     cart,
-  },//////////IF YOU WORKING WITH THE LOGIN ONLY EDIT THIS CODE IN THE APP.VUE PLUS LOGIN COMPONENT AND STORE FOR FRONTEND 
+  },
   data() {
     return {
       showAuthModal: false,
@@ -54,7 +51,14 @@ export default {
       this.showAuthModal = false;
     },
   },
-};//////////LOGIN CODE ENDS
+  watch: {
+    "$store.getters.token"(newToken) {
+      if (newToken) {
+        this.closeAuthModal();
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>

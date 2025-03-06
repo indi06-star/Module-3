@@ -27,10 +27,10 @@
 export default {
   data() {
     return {
-      username: "",
-      email: "",
-      phone_number: "",
-      password: "",
+      username: '',
+      email: '',
+      phone_number: '',
+      password: '',
     };
   },
   methods: {
@@ -43,14 +43,18 @@ export default {
       };
 
       try {
-        // Dispatching the signUpUser action from your store
-        await this.$store.dispatch("signUpUser", userData);
-        alert("Signup successful");
-        this.$emit("close-modal");
+        await this.$store.dispatch('signUpUser', userData);
+        this.$emit('close-modal');
+        this.clearFields();
       } catch (error) {
-        alert("Signup failed");
-        console.error("Signup error:", error);
+        console.error('Signup error:', error);
       }
+    },
+    clearFields() {
+      this.username = '';
+      this.email = '';
+      this.phone_number = '';
+      this.password = '';
     },
   },
 };

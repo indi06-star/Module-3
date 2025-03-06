@@ -5,7 +5,6 @@ import comingsoonRouter from './routes/comingsoonRouter.js';
 import moviesRouter from './routes/moviesRouter.js';
 import usersRouter from './routes/usersRouter.js';
 
-// Load environment variables from .env file
 config(); 
 
 // Create the express app

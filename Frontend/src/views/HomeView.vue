@@ -1,5 +1,4 @@
 <template>
-  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-overlay">
       <h1>Unlimited Movies, at the Click of a Button</h1>
@@ -8,50 +7,30 @@
     </div>
   </section>
 
-  <!-- Movie Section -->
   <section class="movies-section">
     <h2 class="section-title">Trending Now</h2>
-
-    <!-- Movie Cards Section -->
-    <div class="movie-cards">
-      <div 
+    <div v-if="loading">Loading Trending Movies...</div>
+    <div v-else class="movie-cards">
+      <router-link
+        v-for="movie in movies"
+        :key="movie.movie_id"
+        :to="{ name: 'movie-details', params: { id: movie.movie_id } }"
         class="movie-card"
-        v-for="(movie, index) in trendingMovies"
-        :key="index"
       >
-        <router-link :to="'/movies/' + movie.title" class="movie-card-link">
-          <img :src="require(`@/assets/${movie.image}`)" class="movie-img" :alt="movie.title" />
-          <p class="movie-title">{{ movie.title }}</p>
-        </router-link>
-      </div>
-    </div>
-
-    <h2 class="section-title">Recommended for You</h2>
-
-    <!-- Movie Cards Section -->
-    <div class="movie-cards">
-      <div 
-        class="movie-card"
-        v-for="(movie, index) in recommendedMovies"
-        :key="index"
-      >
-        <router-link :to="'/movies/' + movie.title" class="movie-card-link">
-          <img :src="require(`@/assets/${movie.image}`)" class="movie-img" :alt="movie.title" />
-          <p class="movie-title">{{ movie.title }}</p>
-        </router-link>
-      </div>
+        <img :src="movie.img_link" :alt="movie.title" class="movie-img" />
+        <p class="movie-title">{{ movie.title }}</p>
+      </router-link>
     </div>
   </section>
 
-  <!-- Footer Section -->
   <footer class="footer">
     <div class="footer-content">
       <div class="social-media">
-        <a href="https://www.facebook.com" target="_blank" class="social-icon facebook">facebook
-          <i class="fab fa-facebook-f"></i>
+        <a href="https://www.facebook.com" target="_blank" class="social-icon facebook">
+          facebook <i class="fab fa-facebook-f"></i>
         </a>
-        <a href="https://www.instagram.com" target="_blank" class="social-icon instagram">instagram
-          <i class="fab fa-instagram"></i>
+        <a href="https://www.instagram.com" target="_blank" class="social-icon instagram">
+          instagram <i class="fab fa-instagram"></i>
         </a>
       </div>
       <p>&copy; 2025 MovieSite - All Rights Reserved</p>
@@ -60,22 +39,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-  data() {
-    return {
-      trendingMovies: [
-        { title: "Journey 2", image: "trending.jpeg" },
-        { title: "The Joker", image: "trending3.webp" },
-        { title: "Snow White", image: "trends.jpeg" },
-        { title: "Mufasa", image: "trending4.jpg" },
-      ],
-      recommendedMovies: [
-        { title: "Me Before You", image: "recommeded.jpg" },
-        { title: "Smile", image: "recommended2.jpg" },
-        { title: "Moana 2", image: "recommeded3.jpeg" },
-        { title: "The Marvels", image: "recommended4.jpg" },
-      ],
-    };
+  computed: {
+    ...mapGetters(['movies', 'loading']),
+  },
+  mounted() {
+    if (!this.movies || this.movies.length === 0) {
+      this.$store.dispatch('getData');
+    }
   },
 };
 </script>
@@ -96,9 +69,7 @@ export default {
   animation: backgroundBlend 20s ease-in-out infinite;
   transition: background-image 1s ease-in-out;
 }
-.footer a{
-  color:white;
-}
+
 .hero::before {
   content: "";
   position: absolute;
@@ -139,7 +110,7 @@ p {
 .btn {
   display: inline-block;
   padding: 10px 20px;
-  background: #ffcc00;
+  background: #FFCC00;
   color: white;
   text-decoration: none;
   font-weight: bold;
@@ -170,7 +141,7 @@ p {
 /* Movie Section */
 .movies-section {
   padding: 40px;
-  background-color: black; /* Dark background color for movie section */
+  background-color: black;
   color: white;
   min-height: 30vh;
 }
@@ -184,80 +155,51 @@ p {
 .movie-cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around; /* Centers the items and makes use of space */
-  gap: 30px;
-  width: 100%;
-  height: auto; /* Adjust the height to fit the content */
-  align-items: center; /* Centers the cards vertically */
-  overflow-y: auto; /* Enables scrolling if the content overflows */
-  background-color: black; /* Ensure background remains dark for movie cards */
-}
-.movie-card-link {
-  text-decoration: none;
-  color: black;
+  justify-content: space-around;
+  gap: 20px;
 }
 
 .movie-card {
-  width: 300px; /* Set width for the cards */
+  width: 200px;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for scale and shadow */
-  background-color: #000; /* Ensure the card has a black background */
-  border-radius: 10px; /* Rounded corners */
-  padding: 10px; /* Add padding around the content */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
 .movie-card:hover {
-  transform: scale(1.05); /* Scale the card slightly */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add a shadow for 3D effect */
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.movie-card img {
+.movie-img {
   width: 100%;
   height: auto;
-  border-radius: 10px;
-}
-
-.movie-title {
-  margin-top: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff;
-}
-
-/* Footer Section */
-.footer {
-  background-color: black;
-  padding: 30px 0;
-  color: black;
-  text-align: center;
-}
-
-.footer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.social-media {
+  border-radius: 8px;
   margin-bottom: 10px;
 }
 
-.social-icon {
-  font-size: 30px;
-  color: #fff;
-  margin: 0 15px;
-  transition: color 0.3s ease, transform 0.3s ease;
+.footer {
+  background-color: #1e1e1e;
+  padding: 20px 0;
+  text-align: center;
+  color: white;
 }
 
-.social-icon:hover {
-  color: #ffcc00;
-  transform: scale(1.1);
+.footer .social-media {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
+.footer .social-icon {
+  color: white;
+  font-size: 24px;
+}
 
-.footer p {
-  font-size: 14px;
-  color: #888;
+.footer .social-icon:hover {
+  color: #FFCC00;
 }
 </style>

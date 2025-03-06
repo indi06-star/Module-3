@@ -1,11 +1,15 @@
+import { pool } from '../config/config.js';
 import {
   getAllUsers,
   getUserById as findUserById,
   signUpUser as signUpSingleUser,
   deleteSingleUser,
   updateUser,
-  resetPassword as resetUserPassword
 } from "../model/usersModal.js";
+import { compare } from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { config } from 'dotenv';
+config();
 
 // Fetch all users
 export const getUsers = async (req, res) => {
@@ -108,31 +112,38 @@ export const patchUser = async (req, res) => {
     console.error("Error updating user:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-};
+}; 
+export const loginController = async (req, res) => {
+  const { email, password } = req.body;
+  // console.table(req.body);
+  
+  // try {
+    // console.log("Login: Checking email:", email);
 
-// Reset user password
-export const resetPassword = async (req, res) => {
-  try {
-    const { email, newPassword } = req.body;
+    const [rows] = await pool.query(
+      'SELECT user_id, username, password_hash, email FROM users WHERE email = ?',
+      [email]
+    );
+    // console.log("Login: Direct Query Result:", rows[0]);
+    const user = rows[0];
+    if (!user) {
+      return res.status(401).send({ message: 'Invalid credentials' });
+    }
+    // console.log("Password:", password);
+    // console.log("Hash:", user.password_hash);
+    const passwordMatch = await compare(password, user.password_hash);
 
-    if (!email || !newPassword) {
-      return res.status(400).json({ message: "Email and new password are required" });
+    if (!passwordMatch) {
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    await resetUserPassword(email, newPassword);
+    const token = jwt.sign({ userId: user.user_id }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
 
-    res.status(200).json({ message: "Password reset successfully" });
-  } catch (error) {
-    console.error("Error resetting password:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+    res.status(200).json({ message: 'User logged in successfully', token, user });
+  // } catch (error) {
+  //   console.error('Login error:', error);
+  //   res.status(500).send({ message: 'Internal server error' });
+  // }
 };
-////login video
-
-export const loginController =(req,res)=>{
-  res.status(200).send({message:'user logged in successfully'})
-};
-export const postUser = async(req,res)=>{
-  req.body.password_hashed = await hash(req.body.password_hashed,10)
-  res.status(200).send({ message:'A user was added succesfully',users:await postUser(req.body)})
-}

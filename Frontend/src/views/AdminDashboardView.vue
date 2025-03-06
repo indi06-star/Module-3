@@ -7,34 +7,33 @@
       <h2>Movies</h2>
       <label> 
         <span>Movie Title</span>
-        <input type="text" v-model="title" /> 
+        <input type="text" v-model="movieData.title" /> 
       </label>
       <label>
         Description 
-        <input type="text" v-model="description" /> 
+        <input type="text" v-model="movieData.description" /> 
       </label>
       <label> 
         Year Released
-        <input type="text" v-model="year_released" /> 
+        <input type="text" v-model="movieData.year_released" /> 
       </label>
       <label>
         Duration
-        <input type="text" v-model="duration" /> 
+        <input type="text" v-model="movieData.duration" /> 
       </label>
       <label>
         Rental Price
-        <input type="text" v-model="rental_price" /> 
+        <input type="text" v-model="movieData.rental_price" /> 
       </label>
       <label>
         Trailer Url
-        <input type="text" v-model="trailer_url" /> 
+        <input type="text" v-model="movieData.trailer_url" /> 
       </label>
       <label>
         Image Link
-        <input type="text" v-model="img_link" /> 
+        <input type="text" v-model="movieData.img_link" /> 
       </label>
-      <button @click="addMovie">Add Movie</button>
-      <button v-if="movie_id" @click="updateMovie">Update Movie</button>
+      <button @click="addOrUpdateMovie">{{ movieData.movie_id ? 'Update' : 'Add' }} Movie</button>
     </div>
 
     <!-- Movie Table -->
@@ -76,21 +75,21 @@
       <h2>Users</h2>
       <label>
         <span>Username</span>
-        <input type="text" v-model="username" />
+        <input type="text" v-model="userData.username" />
       </label>
       <label>
         Email 
-        <input type="text" v-model="email" /> 
+        <input type="text" v-model="userData.email" /> 
       </label>
       <label> 
         Role
-        <input type="text" v-model="role" /> 
+        <input type="text" v-model="userData.user_role" /> 
       </label>
       <label>
         Phone Number
-        <input type="text" v-model="phone_number" />
+        <input type="text" v-model="userData.phone_number" />
       </label>
-      <button v-if="user_id" @click="updateUser">Update User</button>
+      <button v-if="userData.user_id" @click="updateUser">Update User</button>
     </div>
 
     <!-- Users Table -->
@@ -127,90 +126,61 @@
 export default {
   data() {
     return {
-      // Movie Data
-      title: '',
-      description: '',
-      year_released: '',
-      duration: '',
-      rental_price: '',
-      trailer_url: '',
-      img_link: '',
-      movie_id: null,
-
-      // User Data
-      username: '',
-      email: '',
-      role: '',
-      phone_number: '',
-      user_id: null
+      movieData: {
+        title: '',
+        description: '',
+        year_released: '',
+        duration: '',
+        rental_price: '',
+        trailer_url: '',
+        img_link: '',
+        movie_id: null
+      },
+      userData: {
+        username: '',
+        email: '',
+        user_role: '',
+        phone_number: '',
+        user_id: null
+      }
     };
   },
   mounted() {
-    // Fetch movie and user data when the component is mounted
     this.$store.dispatch('getData');
   },
   methods: {
-    // Movie Methods
-    addMovie() {
-      const movieData = {
-        title: this.title,
-        description: this.description,
-        year_released: this.year_released,
-        duration: this.duration,
-        rental_price: this.rental_price,
-        trailer_url: this.trailer_url,
-        img_link: this.img_link
-      };
-
-      this.$store.dispatch('postMovie', movieData);
+    addOrUpdateMovie() {
+      if (this.movieData.movie_id) {
+        this.$store.dispatch('patchMovie', { movie_id: this.movieData.movie_id, updatedData: this.movieData });
+      } else {
+        this.$store.dispatch('postMovie', this.movieData);
+      }
+      this.resetMovieForm();
     },
     deleteMovie(movie_id) {
       this.$store.dispatch('deleteMovie', movie_id);
     },
     editMovie(movie) {
-      this.title = movie.title;
-      this.description = movie.description;
-      this.year_released = movie.year_released;
-      this.duration = movie.duration;
-      this.rental_price = movie.rental_price;
-      this.trailer_url = movie.trailer_url;
-      this.img_link = movie.img_link;
-      this.movie_id = movie.movie_id;
+      this.movieData = { ...movie };
     },
-    updateMovie() {
-      const updatedData = {
-        title: this.title,
-        description: this.description,
-        year_released: this.year_released,
-        duration: this.duration,
-        rental_price: this.rental_price,
-        trailer_url: this.trailer_url,
-        img_link: this.img_link
+    resetMovieForm() {
+      this.movieData = {
+        title: '', description: '', year_released: '', duration: '', rental_price: '',
+        trailer_url: '', img_link: '', movie_id: null
       };
-
-      this.$store.dispatch('patchMovie', { movie_id: this.movie_id, updatedData });
     },
-
-    // User Methods
     deleteUser(user_id) {
       this.$store.dispatch('deleteUser', user_id);
     },
     editUser(user) {
-      this.username = user.username;
-      this.email = user.email;
-      this.role = user.user_role;
-      this.phone_number = user.phone_number;
-      this.user_id = user.user_id;
+      this.userData = { ...user };
     },
     updateUser() {
-      const updatedData = {
-        username: this.username,
-        email: this.email,
-        user_role: this.role,
-        phone_number: this.phone_number
-      };
-
-      this.$store.dispatch('patchUser', { user_id: this.user_id, updatedData });
+      this.$store.dispatch('patchUser', { user_id: this.userData.user_id, updatedData: this.userData });
+      this.resetUserForm();
+    },
+    resetUserForm() {
+      this.userData = { username: '', email: '', user_role: '', phone_number: '', user_id: null };
     }
   }
 };

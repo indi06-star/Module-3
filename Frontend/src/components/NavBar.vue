@@ -1,32 +1,41 @@
 <template>
   <nav class="navbar">
-    <!-- StreamX Name -->
     <div class="logo">
       <router-link to="/" class="brand-name">StreamX</router-link>
     </div>
 
-    <!-- Navigation Links -->
     <ul class="nav-links">
       <li><router-link to="/">Home</router-link></li>
-      <li><router-link to="/movies">Movies</router-link></li>
+      <router-link to="/movies">Movies</router-link>
       <li><router-link to="/coming-soon">Coming Soon</router-link></li>
-      <li><router-link to="/my-list">My List</router-link></li>
-      <li><router-link to="/admindashboard">AdminDashboard</router-link></li>
+      <li v-if="currentUser && !isAdmin"><router-link to="/my-list">My List</router-link></li>
+      <li v-if="isAdmin"><router-link to="/adminDashboard">AdminDashboard</router-link></li>
     </ul>
 
-    <!-- Authentication Buttons -->
     <div class="auth-buttons">
-      <button class="login-btn" @click="openAuthModal('login')">Login</button>
-      <button class="signup-btn" @click="openAuthModal('signup')">Sign Up</button>
+      <button v-if="!currentUser && !signupSuccess" class="login-btn" @click="openAuthModal('login')">Login</button>
+      <button v-if="!currentUser && !signupSuccess" class="signup-btn" @click="openAuthModal('signup')">Sign Up</button>
+      <button v-if="currentUser" class="logout-btn" @click="handleLogout">Logout</button>
     </div>
   </nav>
+  <router-view />
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
+  computed: {
+    ...mapGetters(['currentUser', 'isAdmin', 'signupSuccess']), // Add signupSuccess to getters
+  },
   methods: {
+    ...mapActions(['logout']),
     openAuthModal(type) {
-      this.$emit("open-auth-modal", type); // Emit event to parent component (App.vue)
+      this.$emit('open-auth-modal', type);
+    },
+    handleLogout() {
+      this.logout();
+      this.$router.push('/');
     },
   },
 };
@@ -39,27 +48,27 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 20px 40px;
-  background-color:black; /* Dark black background */
+  background-color: black;
   position: sticky;
   top: 0;
   z-index: 1000;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  font-family: Arial, sans-serif; /* Standard font */
+  font-family: Arial, sans-serif;
 }
 
 /* StreamX Name */
 .logo .brand-name {
   font-size: 24px;
-  font-weight: bold; /* Standard bold text */
-  color: #ffcc00; /* Bright yellow color */
+  font-weight: bold;
+  color: #ffcc00;
   text-decoration: none;
 }
 
 /* Navbar Links */
 .nav-links {
-  list-style: none; /* Removes the default list bullets */
+  list-style: none;
   display: flex;
-  gap: 20px; /* Adds space between each list item */
+  gap: 20px;
   margin: 0;
   padding: 0;
 }
@@ -71,13 +80,13 @@ export default {
 .nav-links a {
   color: white;
   text-decoration: none;
-  font-size: 1rem; /* Normal font size */
-  font-weight: bold; /* Standard bold text */
+  font-size: 1rem;
+  font-weight: bold;
   transition: color 0.3s;
 }
 
 .nav-links a:hover {
-  color: #ffcc00; /* Golden color for hover */
+  color: #ffcc00;
 }
 
 /* Auth Buttons */
@@ -85,24 +94,25 @@ export default {
   display: flex;
 }
 
-/* ✅ Updated Button Styles - Smaller & Less Rounded */
 .auth-buttons .login-btn,
-.auth-buttons .signup-btn {
-  padding: 8px 16px; /* Smaller size */
+.auth-buttons .signup-btn,
+.auth-buttons .logout-btn {
+  padding: 8px 16px;
   margin-left: 15px;
   border: none;
   background-color: #ffcc00;
   color: white;
-  font-size: 12px; /* Slightly smaller text */
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  border-radius: 5px; /* Slightly rounded for a square look */
+  border-radius: 5px;
 }
 
 .auth-buttons .login-btn:hover,
-.auth-buttons .signup-btn:hover {
+.auth-buttons .signup-btn:hover,
+.auth-buttons .logout-btn:hover {
   background-color: #e67e22;
 }
 
@@ -135,7 +145,8 @@ export default {
   }
 
   .auth-buttons .login-btn,
-  .auth-buttons .signup-btn {
+  .auth-buttons .signup-btn,
+  .auth-buttons .logout-btn {
     margin-left: 0;
     margin-bottom: 10px;
   }
