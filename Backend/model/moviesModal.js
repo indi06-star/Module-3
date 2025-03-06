@@ -1,7 +1,9 @@
 import { pool } from '../config/config.js'; // Ensure this is your MySQL connection pool
 
+// Fetching all movies from the database
 export const getAllMovies = async () => {
   try {
+    // Query the database to get all movies
     const [rows] = await pool.query('SELECT * FROM movies'); // Assuming your table is 'movies'
     return rows;
   } catch (error) {

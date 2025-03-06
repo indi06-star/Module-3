@@ -15,6 +15,9 @@
   </div>
 </template>
 
+
+
+
 <script>
 import { mapGetters } from 'vuex';
 
@@ -30,6 +33,7 @@ export default {
 };
 </script>
 
+
 <style scoped>
 .movies-view {
   padding: 20px;
@@ -38,6 +42,12 @@ export default {
   min-height: 100vh;
 }
 
+/* Set body background to black */
+* {
+  background-color: black; /* Applies black background to all elements */
+}
+
+/* Container for all movie cards */
 .movie-cards {
   display: flex;
   flex-wrap: wrap;
@@ -45,6 +55,7 @@ export default {
   gap: 20px;
 }
 
+/* Individual movie card */
 .movie-card {
   text-align: center;
   width: 200px;
@@ -68,7 +79,61 @@ export default {
 }
 
 .movie-title {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 18px; /* Makes the title readable */
+  color: #ffcc00; /* Matches the button color for consistency */
+}
+
+/* --- RESPONSIVE DESIGN --- */
+
+/* Tablets (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .movie-cards {
+    justify-content: center; /* Center align the movies */
+    gap: 20px; /* Reduce spacing between cards */
+  }
+
+  .movie-card {
+    width: 220px; /* Slightly smaller cards */
+  }
+
+  .movie-image-wrapper {
+    height: 300px; /* Adjusted image height */
+  }
+
+  .movie-title {
+    font-size: 16px; /* Reduce title font size */
+  }
+
+  .play-button {
+    font-size: 14px; /* Reduce button size */
+    padding: 8px 16px;
+  }
+}
+
+/* Mobile devices (max-width: 768px) */
+@media (max-width: 768px) {
+  .movie-cards {
+    flex-direction: column; /* Stack movie cards */
+    align-items: center; /* Center align cards */
+    gap: 15px; /* Reduce spacing */
+  }
+
+  .movie-card {
+    width: 90%; /* Make cards full width */
+    max-width: 300px; /* Limit max width */
+  }
+
+  .movie-image-wrapper {
+    height: 250px; /* Reduce image height */
+  }
+
+  .movie-title {
+    font-size: 14px; /* Smaller title */
+  }
+
+  .play-button {
+    font-size: 12px; /* Adjust button size */
+    padding: 6px 12px;
+  }
 }
 </style>

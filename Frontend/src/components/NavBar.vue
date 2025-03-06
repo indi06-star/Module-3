@@ -42,7 +42,8 @@ export default {
 </script>
 
 <style scoped>
-/* Navbar Styles */
+/* ✅ Navbar Styles */
+/* ✅ Navbar Styles */
 .navbar {
   display: flex;
   align-items: center;
@@ -51,30 +52,36 @@ export default {
   background-color: black;
   position: sticky;
   top: 0;
+  width: 100%;
   z-index: 1000;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
-/* StreamX Name */
+/* ✅ StreamX Name */
 .logo .brand-name {
   font-size: 24px;
+  font-weight: bold;
+  color: #ffcc00;
   font-weight: bold;
   color: #ffcc00;
   text-decoration: none;
 }
 
-/* Navbar Links */
+/* ✅ Navigation Links */
 .nav-links {
   list-style: none;
+  list-style: none;
   display: flex;
+  gap: 20px;
   gap: 20px;
   margin: 0;
   padding: 0;
 }
 
 .nav-links li {
-  margin-right: 40px;
+  margin-right: 20px;
 }
 
 .nav-links a {
@@ -82,14 +89,17 @@ export default {
   text-decoration: none;
   font-size: 1rem;
   font-weight: bold;
+  font-size: 1rem;
+  font-weight: bold;
   transition: color 0.3s;
 }
 
 .nav-links a:hover {
   color: #ffcc00;
+  color: #ffcc00;
 }
 
-/* Auth Buttons */
+/* ✅ Auth Buttons */
 .auth-buttons {
   display: flex;
 }
@@ -108,6 +118,7 @@ export default {
   cursor: pointer;
   transition: background-color 0.3s ease;
   border-radius: 5px;
+  border-radius: 5px;
 }
 
 .auth-buttons .login-btn:hover,
@@ -116,32 +127,65 @@ export default {
   background-color: #e67e22;
 }
 
-/* Mobile View - Make navbar links stack vertically */
+/* ✅ Hamburger Menu for Mobile */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.menu-toggle div {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 4px 0;
+  transition: all 0.3s ease;
+}
+
+/* ✅ Mobile & Tablet View */
 @media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
+  .menu-toggle {
+    display: flex;
   }
 
   .nav-links {
+    display: none;
     flex-direction: column;
-    align-items: flex-start;
-    margin-top: 20px;
+    background-color: black;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    padding: 15px 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-links.active {
+    display: flex;
+    height: auto;
+    min-height: 100vh; /* Full screen to prevent clipping */
   }
 
   .nav-links li {
-    margin-right: 0;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 
-  .nav-links li:last-child {
-    margin-bottom: 0;
-  }
-
+  /* ✅ Auth Buttons Fix */
   .auth-buttons {
+    position: absolute;
+    top: 60px; /* Ensure it's below the navbar */
+    right: 20px;
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px;
+    display: none; /* Initially hidden */
     flex-direction: column;
-    align-items: flex-start;
-    margin-top: 20px;
+    align-items: center;
+    z-index: 2000; /* Ensure it's above everything */
+  }
+
+  .auth-buttons.active {
+    display: flex; /* Show when toggled */
   }
 
   .auth-buttons .login-btn,
@@ -149,6 +193,8 @@ export default {
   .auth-buttons .logout-btn {
     margin-left: 0;
     margin-bottom: 10px;
+    width: 100%;
   }
 }
+
 </style>
