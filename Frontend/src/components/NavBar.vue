@@ -22,18 +22,29 @@
     </ul>
 
     <!-- ✅ Authentication Buttons -->
-    <div class="auth-buttons" :class="{ active: menuOpen }">
-      <button class="login-btn" @click="openAuthModal('login')">Login</button>
+    <div class="auth-buttons" :class="{ active: menuOpen }" v-if="!user">
+      <button class="login-btn" @click="openAuthModal('login')" >Login</button>
       <button class="signup-btn" @click="openAuthModal('signup')">Sign Up</button>
     </div>
+    <div class="auth-buttons" :class="{ active: menuOpen }" v-else>
+      <h2 style="color: white;">Hi... <span>{{  user.user[0].username }}</span></h2>
+      <button class="signup-btn" @click="logout">Log Out</button>
+    </div>
+
+
   </nav>
 </template>
 
 <script>
+import { useCookies } from "vue3-cookies";
+
+const { cookies } = useCookies();
+
 export default {
   data() {
     return {
       menuOpen: false, // Track menu state
+      user: cookies.get('legitUser')
     };
   },
   methods: {
@@ -43,6 +54,10 @@ export default {
     openAuthModal(type) {
       this.$emit("open-auth-modal", type);
     },
+    logout(){
+      cookies.remove('legitUser')
+      location.reload()
+    }
   },
 };
 </script>

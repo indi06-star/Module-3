@@ -13,3 +13,5 @@ const pool = mysql2.createPool({
 export { pool };
 // Export the SECRET_KEY environment variable if needed
 export const SECRET_KEY = process.env.SECRET_KEY;
+
+

@@ -1,56 +1,51 @@
 <template>
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-overlay">
-      <h1>Unlimited Movies, at the Click of a Button</h1>
-      <p>Watch anywhere.</p>
-      <router-link to="/movies" class="btn">Start Watching</router-link>
-    </div>
-  </section>
-
-  <!-- Movie Section -->
-  <section class="movies-section">
-    <h2 class="section-title">Trending Now</h2>
-
-    <!-- Movie Cards Section -->
-    <div class="movie-cards">
-      <div 
-        class="movie-card"
-        v-for="(movie, index) in movies"
-        :key="movie.movie_id"
-      >
-        <router-link :to="'/movies/' + movie.movie_id" class="movie-card-link">
-          <img :src="movie.img_link" class="movie-img" :alt="movie.title" />
-          <p class="movie-title">{{ movie.title }}</p>
-        </router-link>
+  <div class="home">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-overlay">
+        <h1>Unlimited Movies, at the Click of a Button</h1>
+        <h1> welcome to the platform </h1>
+        <p>Watch anywhere.</p>
+        <router-link to="/movies" class="btn">Start Watching</router-link>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer Section -->
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="social-media">
-        <a href="https://www.facebook.com" target="_blank" class="social-icon facebook">facebook
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="https://www.instagram.com" target="_blank" class="social-icon instagram">instagram
-          <i class="fab fa-instagram"></i>
-        </a>
+    <!-- Movie Section -->
+    <section class="movies-section">
+      <h2 class="section-title">Trending Now</h2>
+
+      <div class="movie-cards">
+        <div 
+          class="movie-card"
+          v-for="(movie, index) in movies"
+          :key="movie.movie_id"
+        >
+          <router-link :to="'/movies/' + movie.movie_id" class="movie-card-link">
+            <img :src="movie.img_link" class="movie-img" :alt="movie.title" />
+            <p class="movie-title">{{ movie.title }}</p>
+          </router-link>
+        </div>
       </div>
-      <p>&copy; 2025 MovieSite - All Rights Reserved</p>
-    </div>
-  </footer>
+    </section>
+
+    <!-- Footer Component (added here) -->
+    <Footer />
+  </div>
 </template>
+import Footer from '@/components/Footer.vue';
 
 <script>
 import axios from 'axios';
+import Footer from '@/components/footer.vue'; // Import Footer Component
 
 export default {
   data() {
     return {
       movies: [],
     };
+  },
+  components: {
+    Footer, // Register Footer component here
   },
   created() {
     this.fetchMovies();
@@ -69,7 +64,77 @@ export default {
 </script>
 
 <style scoped>
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This centers everything */
+  justify-content: space-between; /* Adds space between hero, movie section, and footer */
+  text-align: center;
+  min-height: 100vh; /* Ensures the page covers the full screen */
+}
+
 /* Hero Section */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  background-image: url("@/assets/collage2.jpg");
+  background-size: cover;
+  background-position: center;
+  animation: backgroundBlend 20s ease-in-out infinite;
+  transition: background-image 1s ease-in-out;
+}
+
+/* Movie Section */
+.movies-section {
+  padding: 40px;
+  background-color: black;
+  color: white;
+  min-height: 30vh;
+  min-width: 100dvw;
+  text-align: left !important;
+}
+
+.section-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Footer Section */
+footer {
+  background-color: black;
+  padding: 20px 0;
+  color: white;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon {
+  margin: 0 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.social-icon:hover {
+  color: yellow;
+}
+
+.footer p {
+  font-size: 14px;
+  color: #888;
+}
+
 .hero {
   position: relative;
   width: 100%;
@@ -212,40 +277,4 @@ p {
   color: #fff;
 }
 
-/* Footer Section */
-.footer {
-  background-color: black;
-  padding: 30px 0;
-  color: black;
-  text-align: center;
-}
-
-.footer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.social-media {
-  margin-bottom: 10px;
-}
-
-.social-icon {
-  font-size: 30px;
-  color: #fff;
-  margin: 0 15px;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.social-icon:hover {
-  color: #ffcc00;
-  transform: scale(1.1);
-}
-
-
-.footer p {
-  font-size: 14px;
-  color: #888;
-}
 </style>

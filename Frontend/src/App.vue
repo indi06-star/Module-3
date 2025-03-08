@@ -73,18 +73,18 @@ export default {
 }
 
 .modal-content {
-  background: white;
   padding: 20px;
   width: 350px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   position: relative;
+  height: 65% ;
 }
 
 .close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 30px;
   border: none;
   background: none;
   font-size: 18px;

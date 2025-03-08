@@ -6,6 +6,7 @@ import MyListView from '../views/MyListView.vue'
 import HomeView from '@/views/HomeView.vue'
 import AdminDashboardView from '@/views/AdminDashboardView.vue'
 import cart from '@/components/cart.vue'
+import Login from '@/components/Login.vue'
 
 const routes = [
   {
@@ -43,7 +44,14 @@ const routes = [
     path: '/adminDashboard',
     name: 'AdminDashboard',
     component: AdminDashboardView
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
   }
+
+
 ]
 
 const router = createRouter({
