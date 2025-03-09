@@ -72,3 +72,53 @@ export const resetPassword = async (req, res) => {
     res.status(500).json({ error: "Error resetting password" });
   }
 };
+
+export const updateUser = async (req, res) => {
+  try {
+
+    let data = req.body;
+
+    if(data.password_hash){
+
+      const [load] = await pool.query(`SELECT * FROM users WHERE user_id = ${req.params.user_id}`, [data]);
+
+      if (load[0].password_hash == data.password_hash) {
+
+        const query = `UPDATE users SET ? WHERE user_id =${req.params.user_id}`;
+        const [result] = await pool.query(query, [data]);
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ error: "User not updated"});
+        }
+
+        res.json({ message: "User updated successfully", result });
+      } else {
+        
+        data.password_hash = await bcrypt.hash(data.password_hash, 10);
+
+        const query = `UPDATE users SET ? WHERE user_id =${req.params.user_id}`;
+        const [result] = await pool.query(query, [data]);
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ error: "User not updated"});
+        }
+
+        res.json({ message: "User updated successfully", result });
+        
+
+      }
+    } else {
+      const query = `UPDATE users SET ? WHERE user_id =${req.params.user_id}`;
+      const [result] = await pool.query(query, [data]);
+  
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: "User not updated"});
+      }
+  
+      res.json({ message: "User updated successfully", result });
+    }
+
+  } catch (error) {
+    res.status(500).json({ error: error});
+  }
+};
+
+

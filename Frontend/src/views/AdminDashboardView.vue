@@ -52,6 +52,13 @@
 
                                     <div class="form-control-wrapper">
                                         <span>
+                                            <input class="form-control" type="email" placeholder="Email address" v-model="info.phone_number"
+                                                required />
+                                        </span>
+                                    </div>
+
+                                    <div class="form-control-wrapper">
+                                        <span>
                                             <input class="form-control" type="email" placeholder="Email address" v-model="info.email"
                                                 required />
                                         </span>
@@ -199,7 +206,8 @@
 
 
 
-    let uID
+    let uID = null
+
     function updateUID(user) {
         info.value = {
             username: user.username,
@@ -208,7 +216,7 @@
             user_role: user.user_role,
             phone_number: user.phone_number,
         }        
-        uID = user.userID
+        uID = user.user_id
     }
 
     let mID
@@ -229,9 +237,10 @@
     function updateUser() {
         const data = {
             id : uID,
-            load : payload.value
+            load : info.value
         }
-        console.log(data);
+
+        store.dispatch('updateUser', data)
     }
 
 
