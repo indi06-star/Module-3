@@ -37,7 +37,7 @@ export const signUpUser = async (req, res) => {
     
     const newUser = await signUpSingleUser(username, email, phone_number, password);
     res.json({
-      message: "User signed up successfully",
+      message: "User signed up successfully😎",
       user: {
         user_id: newUser.user_id,
         username,

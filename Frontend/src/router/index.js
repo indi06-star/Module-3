@@ -41,8 +41,8 @@ const routes = [
     component: cart
   },
   {
-    path: '/adminDashboard',
-    name: 'AdminDashboard',
+    path: '/admin-dashboard',
+    name: 'admin-dashboard',
     component: AdminDashboardView
   },
   {

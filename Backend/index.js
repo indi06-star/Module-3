@@ -5,6 +5,7 @@ import mysql from 'mysql2/promise';
 import comingsoonRouter from './routes/comingsoonRouter.js';
 import moviesRouter from './routes/moviesRouter.js';
 import usersRouter from './routes/usersRouter.js';
+import rentalsRouter from './routes/rentalsRouter.js'
 import authRoutes from './routes/authRoutes.js'; // Added auth routes
 
 config(); 
@@ -20,6 +21,7 @@ app.use('/coming_soon', comingsoonRouter); // Coming soon movies route
 app.use('/movies', moviesRouter); // Movies route
 app.use('/users', usersRouter); // Users route
 app.use('/auth', authRoutes); // Auth routes (Login, Signup, etc.)
+app.use('/rentals', rentalsRouter)
 
 // Start the server
 const PORT = process.env.PORT || 3000;

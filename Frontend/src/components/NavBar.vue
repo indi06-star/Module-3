@@ -16,9 +16,8 @@
     <ul class="nav-links" :class="{ active: menuOpen }">
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/movies">Movies</router-link></li>
-      <li><router-link to="/coming-soon">Coming Soon</router-link></li>
       <li><router-link to="/my-list">My List</router-link></li>
-      <li><router-link to="/admin-dashboard">Admin Dashboard</router-link></li>
+      <li><router-link to="/admin-dashboard" v-if="admintester">Admin Dashboard</router-link></li>
     </ul>
 
     <!-- ✅ Authentication Buttons -->
@@ -26,6 +25,7 @@
       <button class="login-btn" @click="openAuthModal('login')" >Login</button>
       <button class="signup-btn" @click="openAuthModal('signup')">Sign Up</button>
     </div>
+    
     <div class="auth-buttons" :class="{ active: menuOpen }" v-else>
       <h2 style="color: white;">Hi... <span>{{  user.user[0].username }}</span></h2>
       <button class="signup-btn" @click="logout">Log Out</button>
@@ -46,6 +46,16 @@ export default {
       menuOpen: false, // Track menu state
       user: cookies.get('legitUser')
     };
+  },
+  computed : {
+    admintester(){
+      if(cookies.get('legitUser')?.user[0].user_role == 'admin'){
+        return true
+      } else {
+        console.log('oops')
+        return false
+      }
+    }
   },
   methods: {
     toggleMenu() {

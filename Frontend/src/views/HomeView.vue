@@ -54,7 +54,8 @@ export default {
     async fetchMovies() {
       try {
         const response = await axios.get('http://localhost:3000/movies');
-        this.movies = response.data;
+        console.log(response.data.slice(0,4));
+        this.movies = response.data.slice(0,3);
       } catch (error) {
         console.error("There was an error fetching the movies:", error);
       }

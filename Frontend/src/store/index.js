@@ -8,7 +8,9 @@ const { cookies } = useCookies();
 const store = createStore({
   state: {
     movies: [], // Store all movies
-    movie: null // Store single movie
+    movie: null, // Store single movie
+    users: null,
+    rentals : null
   },
   getters: {
     getMovies: (state) => state.movies, // Getter for all movies
@@ -20,6 +22,12 @@ const store = createStore({
     },
     setSingleMovie(state, movie) {
       state.movie = movie; // Store single movie
+    },
+    setUsers(state, users) {
+      state.users = users; // Store single movie
+    },
+    setRentals(state, rentals) {
+      state.rentals = rentals; // Store single movie
     }
   },
   actions: {
@@ -27,6 +35,23 @@ const store = createStore({
       try {
         const response = await axios.get('http://localhost:3000/movies'); // Correct API route
         commit('setMovies', response.data); // Store movies in state
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      }
+    },
+
+    async getRentedMovies({ commit }, id) {
+      try {
+        const response = await axios.get(`http://localhost:3000/rentals/${id}`); // Correct API route
+        commit('setRentals', response.data); // Store movies in state
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      }
+    },
+    async getAllUsers({ commit }) {
+      try {
+        const response = await axios.get('http://localhost:3000/users'); // Correct API route
+        commit('setUsers', response.data); // Store movies in state
       } catch (error) {
         console.error('Error fetching movies:', error);
       }
@@ -65,6 +90,37 @@ const store = createStore({
         }
       } catch (error) {
         toast("Hello! Wow so easy!", {
+          "theme": "colored",
+          "type": "warning",
+          "dangerouslyHTMLString": true
+        })
+      }
+    },
+
+    async SignUp({commit}, Payload){
+      try {
+        console.log(Payload);
+        
+        const {message, user} = await (await axios.post('http://localhost:3000/users/signup', Payload)).data
+        if(user){
+          toast(`${message}`, {
+            "theme": "colored",
+            "type": "success",
+            "dangerouslyHTMLString": true
+          })
+
+          setInterval(() =>{
+            location.reload()
+          }, 2000)
+        } else {
+          toast(`${message}`, {
+            "theme": "colored",
+            "type": "warning",
+            "dangerouslyHTMLString": true
+          })
+        }
+      } catch (error) {
+        toast("Oops... something went wrong😭", {
           "theme": "colored",
           "type": "warning",
           "dangerouslyHTMLString": true
