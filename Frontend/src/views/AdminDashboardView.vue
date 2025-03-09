@@ -170,6 +170,7 @@
 
                         <br> 
                         <button style="width: 5rem;" type="button" @click="" class="btn btn-dark" :id="movie.movie_id" deleteProduct >Delete</button>
+                        
                         </td> 
                     </tr>
                 </tbody>
