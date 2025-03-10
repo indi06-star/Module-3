@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUsers, getUserById, resetPassword, signUpUser, updateUser } from '../controller/usersController.js';
+import { getUsers, getUserById, resetPassword, signUpUser, updateUser, deleteUser } from '../controller/usersController.js';
 import { loginUser } from "../controller/authController.js"; // ✅ Ensuring correct imports
 
 
@@ -22,5 +22,7 @@ router.post('/login', loginUser);
 router.patch('/update/:user_id', updateUser)
 
 router.patch('/reset-password', resetPassword);
+
+router.delete('/delete/:user_id', deleteUser)
 
 export default router;

@@ -1,4 +1,4 @@
-import { getAllUsers, getUserById as findUserById, signUpUser as signUpSingleUser } from "../model/usersModal.js";
+import { getAllUsers, getUserById as findUserById, signUpUser as signUpSingleUser, getDeleteUser } from "../model/usersModal.js";
 import bcrypt from "bcrypt";
 import { pool } from "../config/config.js";
 
@@ -7,6 +7,16 @@ export const getUsers = async (req, res) => {
   try {
     const users = await getAllUsers();
     res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching users" });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const result = await getDeleteUser(req.params.user_id);
+    res.json({message : 'User Deleted successfully😒',result});
+
   } catch (error) {
     res.status(500).json({ error: "Error fetching users" });
   }

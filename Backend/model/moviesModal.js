@@ -40,3 +40,12 @@ export const getUpdateMovie = async (req, movieId) => {
     return error
   }
 };
+
+export const getDeleteMovie = async (user_id) => {
+  try {
+    const [rows] = await pool.query("DELETE FROM movies WHERE movie_id = ?", [user_id]);
+    return rows.affectedRows > 0 ? rows : null;
+  } catch (error) {
+    throw error;
+  }
+};

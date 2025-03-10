@@ -19,6 +19,15 @@ export const getUserById = async (user_id) => {
     throw error;
   }
 };
+
+export const getDeleteUser = async (user_id) => {
+  try {
+    const [rows] = await pool.query("DELETE FROM users WHERE user_id = ?", [user_id]);
+    return rows.affectedRows > 0 ? rows : null;
+  } catch (error) {
+    throw error;
+  }
+};
 export const signUpUser = async (username, email, phone_number, password) => {
   try {
     // Hash the password before storing it

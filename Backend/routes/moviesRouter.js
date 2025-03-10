@@ -1,5 +1,5 @@
 import express from 'express';
-import { getMovies, getSingleMovie, updateMovie } from '../controller/moviesController.js';
+import { getMovies, getSingleMovie, updateMovie, deleteMovie  } from '../controller/moviesController.js';
 
 const router = express.Router();
 
@@ -26,6 +26,14 @@ router.patch('/update/:movie_id', async (req, res) => {
     await updateMovie(req, res);  // Use your existing function for handling logic
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.delete('/delete/:movie_id', async (req, res) => {
+  try {
+    await deleteMovie(req, res);  // Use your existing function for handling logic
+  } catch (error) {
+    res.status(500).json({ error: error });
   }
 });
 

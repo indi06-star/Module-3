@@ -1,4 +1,4 @@
-import { getAllMovies, getMovieById, getUpdateMovie } from '../model/moviesModal.js';
+import { getAllMovies, getMovieById, getUpdateMovie, getDeleteMovie } from '../model/moviesModal.js';
 
 const getMovies = async (req, res) => {
   try {
@@ -42,4 +42,14 @@ const updateMovie = async (req, res) => {
   }
 };
 
-export { getMovies, getSingleMovie, updateMovie};  // Make sure the getMovies function is exported
+const deleteMovie = async (req, res) => {
+  try {
+    const result = await getDeleteMovie(req.params.movie_id);
+    res.json({message : 'Movie Deleted successfully😒',result});
+
+  } catch (error) {
+    res.status(500).json({ error: "Error deleting users" });
+  }
+};
+
+export { getMovies, getSingleMovie, updateMovie, deleteMovie};  // Make sure the getMovies function is exported
