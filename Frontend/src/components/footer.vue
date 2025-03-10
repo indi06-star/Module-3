@@ -13,13 +13,11 @@
       <p>Follow us:</p>
       <div class="social-icons">
           <a href="https://web.facebook.com/profile.php?id=61573644071986" title="facebook icons" target="_blank"><img src="https://i.postimg.cc/bvP8Q0TR/facebook-1.png" alt="facebook" style="width: 2rem"/></a>
-          <a href="https://web.facebook.com/profile.php?id=61573644071986" title="instagram icons" target="_blank"><img src="https://i.postimg.cc/R0tdzK52/instagram.png" alt="instagram" style="width: 2rem"/></a>
-          <a href="https://web.facebook.com/profile.php?id=61573644071986" title="twitter icons" target="_blank"><img src="https://i.postimg.cc/ry7Sqzgk/twitter-1.png" alt="twitter" style="width: 2rem"/></a>
+          <a href="https://www.instagram.com/anathimnotoz/" title="instagram icons" target="_blank"><img src="https://i.postimg.cc/R0tdzK52/instagram.png" alt="instagram" style="width: 2rem"/></a>
+          <a href="https://x.com/AnathiMnot68642" title="twitter icons" target="_blank"><img src="https://i.postimg.cc/ry7Sqzgk/twitter-1.png" alt="twitter" style="width: 2rem"/></a>
       </div>
       </div>
-      <div class="dark-mode-toggle">
-      <button id="darkModeBtn">🌙 Dark Mode</button>
-      </div>
+
   </div>
   </footer>
 

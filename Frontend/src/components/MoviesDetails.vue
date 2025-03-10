@@ -30,10 +30,10 @@
   <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
   </button>
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title" id="exampleModalLabel">Book Date </h3>
+    <div class="modal-dialog bg-dark" role="document">
+      <div class="modal-content  bg-dark">
+        <div class="modal-header d-flex flex-row justify-content-center text-center">
+          <h3 style="color: black !important;">Book a Date</h3>
         </div>
         <div class="modal-body">
           <form>
@@ -47,7 +47,7 @@
             </div>
           </form>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer d-flex flex-column justify-content-center align-items-center">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary" @click="bookMovie(movie)">Book Movie</button>
         </div>
@@ -296,6 +296,12 @@ export default {
 /* Changes button border when clicked */
 .button:active {
   border: 1px solid #2e8644;
+}
+
+.modal-footer{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
 }
 
 /* Media queries for responsiveness */

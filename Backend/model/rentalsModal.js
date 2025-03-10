@@ -4,11 +4,10 @@ export const getAllrentals = async (req, res) => {
   try {
     
     const [rows] = await pool.query(`
-      SELECT user_id,title, total_cost, img_link, rental_start, rental_end FROM rentals
+      SELECT user_id,title, total_cost, img_link, SUBSTRING(rental_start, 1, 10) 'rental_start', SUBSTRING(rental_end, 1,10) 'rental_end' FROM rentals
       LEFT JOIN movies using(movie_id)
       LEFT JOIN users using(user_id)
-      WHERE user_id = ${req.params.id}
-      ;`); // Assuming your table is 'movies'
+      WHERE user_id = ${req.params.id};`); // Assuming your table is 'movies'
     return rows;
   } catch (error) {
     throw error;
