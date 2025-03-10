@@ -25,3 +25,18 @@ export const getMovieById = async (movieId) => {
     throw error;
   }
 };
+
+export const getUpdateMovie = async (req, movieId) => {
+  try {    
+    const query = `UPDATE movies SET ? WHERE movie_id =${movieId}`;
+    const [result] = await pool.query(query, [req.body]);
+    if (result.affectedRows === 0) {
+      return 'Movie not updated😭';
+    }
+    return result
+
+  } catch (error) {
+    console.error('Error in getMovieById:', error);
+    return error
+  }
+};

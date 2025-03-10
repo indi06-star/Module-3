@@ -157,6 +157,36 @@ const store = createStore({
           "dangerouslyHTMLString": true
         })
       }
+    },
+    async updateMovies({commit}, Payload){
+      try {
+        console.log(Payload);
+
+        const {message, result} = await (await axios.patch(`http://localhost:3000/movies/update/${Payload.id}`, Payload.load)).data
+        if(result){
+          toast(`${message}`, {
+            "theme": "colored",
+            "type": "success",
+            "dangerouslyHTMLString": true
+          })
+
+          setInterval(() =>{
+            location.reload()
+          }, 2000)
+        } else {
+          toast(`${message}`, {
+            "theme": "colored",
+            "type": "warning",
+            "dangerouslyHTMLString": true
+          })
+        }
+      } catch (error) {
+        toast("Oops... something went wrong😭", {
+          "theme": "colored",
+          "type": "warning",
+          "dangerouslyHTMLString": true
+        })
+      }
     }
   },
   modules: {}

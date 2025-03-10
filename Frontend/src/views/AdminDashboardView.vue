@@ -162,7 +162,7 @@
                             </div>
                             <div class="modal-footer d-flex flex-column justify-content-around">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" @click="updateUser()">Save changes</button>
+                                <button type="button" class="btn btn-primary" @click="updateMovie()">Save changes</button>
                             </div>
                             </div>
                         </div>
@@ -220,7 +220,7 @@
         uID = user.user_id
     }
 
-    let mID
+    let mID = null;
 
     function updatemID(movie) {
         movinfo.value = {
@@ -242,6 +242,15 @@
         }
 
         store.dispatch('updateUser', data)
+    }
+
+    function updateMovie() {
+        const data = {
+            id : mID,
+            load : movinfo.value
+        }
+        
+        store.dispatch('updateMovies', data)
     }
 
 

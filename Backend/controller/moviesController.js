@@ -1,4 +1,4 @@
-import { getAllMovies, getMovieById } from '../model/moviesModal.js';
+import { getAllMovies, getMovieById, getUpdateMovie } from '../model/moviesModal.js';
 
 const getMovies = async (req, res) => {
   try {
@@ -27,5 +27,19 @@ const getSingleMovie = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+const updateMovie = async (req, res) => {
+  try {
+    const result = await getUpdateMovie(req, req.params.movie_id); // Fetch single movie by ID
+    if (result) {
+      res.status(200).json({message: 'Movie updated successfully😎', result});  // Return the movie details
+    } else {
+      // res.status(404).json({ error: 'Movie not found' });
+      console.log(error)
+    }
+  } catch (error) {
+    console.error('Error fetching single movie:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
-export { getMovies, getSingleMovie };  // Make sure the getMovies function is exported
+export { getMovies, getSingleMovie, updateMovie};  // Make sure the getMovies function is exported
