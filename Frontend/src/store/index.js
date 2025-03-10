@@ -217,6 +217,36 @@ const store = createStore({
           "dangerouslyHTMLString": true
         })
       }
+    },
+    async book({commit}, Payload){
+      try {
+        console.log(Payload);
+
+        const {message, result} = await (await axios.post(`http://localhost:3000/rentals/book`, Payload)).data
+        if(result){
+          toast(`${message}`, {
+            "theme": "colored",
+            "type": "success",
+            "dangerouslyHTMLString": true
+          })
+
+          setInterval(() =>{
+            location.reload()
+          }, 2000)
+        } else {
+          toast(`${message}`, {
+            "theme": "colored",
+            "type": "warning",
+            "dangerouslyHTMLString": true
+          })
+        }
+      } catch (error) {
+        toast("Oops... something went wrong😭", {
+          "theme": "colored",
+          "type": "warning",
+          "dangerouslyHTMLString": true
+        })
+      }
     }
   },
   modules: {}

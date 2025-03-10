@@ -49,7 +49,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" @click="bookMovie(movie.movie_id)">Book Movie</button>
+          <button type="button" class="btn btn-primary" @click="bookMovie(movie)">Book Movie</button>
         </div>
       </div>
     </div>
@@ -58,9 +58,9 @@
 </template>
 
 <script>
-import { useCookies } from "vue3-cookies";
-
-const { cookies } = useCookies();
+  import store from '@/store'
+  import { useCookies } from "vue3-cookies";
+  const { cookies } = useCookies();
 
 export default {
   props: ['id', 'trailer_url', 'description', 'price'],  // Accept passed props
@@ -107,12 +107,15 @@ export default {
      bookMovie(movie) {
         const payload = {
           user_id : cookies.get('legitUser')?.user[0].user_id  || 1,
-          startDate : this.startDate,
-          endDate : this.endDate,
-          movie_id: movie
+          rental_start : this.startDate,
+          rental_end : this.endDate,
+          movie_id: movie.movie_id,
+          total_cost: +movie.rental_price
+
         }
 
         console.log(payload)
+        store.dispatch('book', payload)
 
     },
   },

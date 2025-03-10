@@ -17,6 +17,8 @@ export const getAllrentals = async (req, res) => {
 
 export const bookMovie = async (req, res) => {
   try {
+    console.log('hey there');
+    
     const [rows] = await pool.query(`INSERT INTO rentals SET ?`, [req.body]);
     return rows;
   } catch (error) {
