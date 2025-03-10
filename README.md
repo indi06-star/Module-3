@@ -67,11 +67,11 @@ Please use the following credentials for logging in
 ```sh
 # to login in as a user:
 username = john@gmail.com
-password = 1234
+password = user1234
 
 # to login in as a admin:
 username = stan@StreamX.com
-password = 1234
+password = admin1234
 ```
 You can also create your own account and login with those credentials 
 
