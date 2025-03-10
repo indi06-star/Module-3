@@ -62,6 +62,19 @@ This will launch the frontend in your browser.
 ## 5. Access the Application
 Click on the link provided in the terminal after running the frontend.
 
+## 6. Users Creds for logging in
+Please use the following credentials for logging in
+```sh
+# to login in as a user:
+username = john@gmail.com
+password = 1234
+
+# to login in as a admin:
+username = stan@StreamX.com
+password = 1234
+```
+You can also create your own account and login with those credentials 
+
 Enjoy exploring the project!
 
 ---
