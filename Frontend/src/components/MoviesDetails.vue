@@ -25,7 +25,7 @@
     <p v-if="error" class="loading-message">{{ error }}</p>
     <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
 
-  <span class="button__text" >Add To Cart</span>
+  <span class="button__text" >Rent Movie</span>
 
   <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
   </button>
@@ -38,11 +38,11 @@
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Recipient:</label>
+              <label for="recipient-name" class="col-form-label">Start Date:</label>
               <input type="date" class="form-control" id="recipient-name" v-model="startDate">
             </div>
             <div class="form-group">
-              <label for="message-text" class="col-form-label">Message:</label>
+              <label for="message-text" class="col-form-label">End Date:</label>
               <input type="date" class="form-control" id="message-text" v-model="endDate">
             </div>
           </form>
