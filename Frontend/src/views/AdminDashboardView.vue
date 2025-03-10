@@ -82,7 +82,7 @@
                         </div>
 
                         <br> 
-                        <button style="width: 5rem;" type="button" @click="userDelete(user.userID)" class="btn btn-dark" :id="user.userID" deleteProduct >Delete</button>
+                        <button style="width: 5rem;" type="button" @click="deleteThis('users', user.user_id)" class="btn btn-dark" :id="user.userID" deleteProduct >Delete</button>
                         </td> 
                     </tr>
                 </tbody>
@@ -169,7 +169,7 @@
                         </div>
 
                         <br> 
-                        <button style="width: 5rem;" type="button" @click="" class="btn btn-dark" :id="movie.movie_id" deleteProduct >Delete</button>
+                        <button style="width: 5rem;" type="button" @click="deleteThis('movies', movie.movie_id)" class="btn btn-dark" :id="movie.movie_id" deleteProduct >Delete</button>
                         
                         </td> 
                     </tr>
@@ -251,6 +251,10 @@
         }
         
         store.dispatch('updateMovies', data)
+    }
+
+    function deleteThis(params, movid) {
+        store.dispatch('delete', {table: params, id : movid})
     }
 
 
