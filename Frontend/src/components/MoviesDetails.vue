@@ -23,14 +23,45 @@
     </div>
     <p v-if="!movie && !error">Loading movie details...</p>
     <p v-if="error" class="loading-message">{{ error }}</p>
-    <button type="button" class="button">
-  <span class="button__text">Add To Cart</span>
+    <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+
+  <span class="button__text" >Add To Cart</span>
+
   <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
-</button>
+  </button>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Book Date </h3>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Recipient:</label>
+              <input type="date" class="form-control" id="recipient-name" v-model="startDate">
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Message:</label>
+              <input type="date" class="form-control" id="message-text" v-model="endDate">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" @click="bookMovie(movie.movie_id)">Book Movie</button>
+        </div>
+      </div>
+    </div>
+  </div>
   </section>
 </template>
 
 <script>
+import { useCookies } from "vue3-cookies";
+
+const { cookies } = useCookies();
+
 export default {
   props: ['id', 'trailer_url', 'description', 'price'],  // Accept passed props
 
@@ -38,6 +69,8 @@ export default {
     return {
       movie: null,
       error: null,
+      startDate: null,
+      endDate: null
     };
   },
 
@@ -69,6 +102,18 @@ export default {
       } catch (error) {
         this.error = error.message || "Failed to load movie details. Please try again later.";
       }
+    },
+
+     bookMovie(movie) {
+        const payload = {
+          user_id : cookies.get('legitUser')?.user[0].user_id  || 1,
+          startDate : this.startDate,
+          endDate : this.endDate,
+          movie_id: movie
+        }
+
+        console.log(payload)
+
     },
   },
 };

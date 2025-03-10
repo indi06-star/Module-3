@@ -14,3 +14,12 @@ export const getAllrentals = async (req, res) => {
     throw error;
   }
 };
+
+export const bookMovie = async (req, res) => {
+  try {
+    const [rows] = await pool.query(`INSERT INTO rentals SET ?`, [req.body]);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+};
