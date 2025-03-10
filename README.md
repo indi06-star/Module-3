@@ -48,7 +48,7 @@ This will start the Express server, allowing the frontend to communicate with it
 
 ## 4. Run the Frontend
 Once the backend is running, start the frontend.
-Please open a NEW git bash window to run this command, I repeat please don't close the backend serve to run this command leave it running on another window and run the following command 
+Please open a NEW git bash window to run this command, I repeat please don't close the backend server to run this command leave it running on another window and run the following command 
 in a new window pleaseeeeee🚨🚨🚨🚨🚨🚨
 
 ```sh
