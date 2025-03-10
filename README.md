@@ -3,6 +3,7 @@
 ## Project Setup Guide
 
 Thank you for taking the time to review my work! Follow these steps to set up and run the project.
+Please note, all the following commands can only be ran on git bash. Not cmd, not powershell but GIT BASH.
 
 ---
 
@@ -47,6 +48,8 @@ This will start the Express server, allowing the frontend to communicate with it
 
 ## 4. Run the Frontend
 Once the backend is running, start the frontend.
+Please open a NEW git bash window to run this command, I repeat please don't close the backend serve to run this command leave it running on another window and run the following command 
+in a new window pleaseeeeee🚨🚨🚨🚨🚨🚨
 
 ```sh
 npm run serve --prefix Frontend/
