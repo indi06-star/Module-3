@@ -15,13 +15,13 @@
                         <th>Modify</th>
                     </tr>
                     <tr v-for="(user, index) in users" :key="index">
-                        <td data-th="Supplier Code">{{ user.user_id }}</td>
-                        <td data-th="Supplier Name">{{ user.username }}</td>
-                        <td data-th="Invoice Number">{{ user.email }}</td>
-                        <td data-th="Invoice Date">{{ user.password_hash }}</td>
-                        <td data-th="Due Date">{{ user.phone_number }}</td>
-                        <td data-th="Net Amount">{{ user.user_role }}</td>
-                        <td data-th="Net Amount">
+                        <td data-th="User ID">{{ user.user_id }}</td>
+                        <td data-th="Username">{{ user.username }}</td>
+                        <td data-th="Email">{{ user.email }}</td>
+                        <td data-th="Password">{{ user.password_hash }}</td>
+                        <td data-th="Phone Number">{{ user.phone_number }}</td>
+                        <td data-th="User Role">{{ user.user_role }}</td>
+                        <td data-th="Modify">
 
                         <button type="button" class="btn btn-secondary mb-3" @click="updateUID(user)" data-bs-toggle="modal" data-bs-target="#editUser" style="width: 5rem;">
                             Edit
@@ -101,13 +101,13 @@
                         <th>Modify</th>
                     </tr>
                     <tr v-for="(movie, index) in movies" :key="index">
-                        <td data-th="Supplier Code">{{ movie.movie_id }}</td>
-                        <td data-th="Supplier Name"><img :src="movie.img_link" style="width: 5rem;" /></td>
-                        <td data-th="Invoice Number">{{ movie.title }}</td>
-                        <td data-th="Invoice Date">{{ movie.description }}</td>
-                        <td data-th="Due Date">{{ movie.rental_price }}</td>
-                        <td data-th="Net Amount">{{ movie.year_released }} </td>
-                        <td data-th="Net Amount">
+                        <td data-th="Movie ID">{{ movie.movie_id }}</td>
+                        <td data-th="Movie"><img :src="movie.img_link" style="width: 5rem;" /></td>
+                        <td data-th="Movie Title">{{ movie.title }}</td>
+                        <td data-th="Description">{{ movie.description }}</td>
+                        <td data-th="rental Price">{{ movie.rental_price }}</td>
+                        <td data-th="Year Released">{{ movie.year_released }} </td>
+                        <td data-th="Modify">
 
                         <button type="button" class="btn btn-secondary mb-3" @click="updatemID(movie)" data-bs-toggle="modal" data-bs-target="#editMovie" style="width: 5rem;">
                             Edit
