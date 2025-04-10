@@ -4,7 +4,7 @@
 Thank you for taking the time to review my work! Follow these steps to set up and run the project.
 Please note, all the following commands can only be ran on git bash. Not cmd, not powershell but GIT BASH.
 
-A fully functional Streaming website built by Anathi Driver, Spit Fire, Wade, Tiffany, for the Module3 assignment. StreamX offers a plethora of movies from different genres. You can browse through our movies and you can aslo book a movie which will then be added to your movies list.
+A fully functional Streaming website built by Anathi Mnotoza, Indiphile Mncegwa, Wade Brittz, Tiffany Johnson, for the Module3 assignment. StreamX offers a plethora of movies from different genres. You can browse through our movies and you can aslo book a movie which will then be added to your movies list.
 ---
 
 ## Technologies Used
