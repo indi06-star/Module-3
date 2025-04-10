@@ -7,6 +7,13 @@ Please note, all the following commands can only be ran on git bash. Not cmd, no
 A fully functional Streaming website built by Anathi Mnotoza, Indiphile Mncegwa, Wade Brittz, Tiffany Johnson, for the Module3 assignment. StreamX offers a plethora of movies from different genres. You can browse through our movies and you can aslo book a movie which will then be added to your movies list.
 ---
 
+
+## Live Demo  
+🎬 Check out our project in action!  
+[![Watch the demo](https://img.youtube.com/vi/bUXiihQuqAU/0.jpg)](https://www.youtube.com/watch?v=bUXiihQuqAU)
+
+---
+
 ## Technologies Used
 - **Front-end:** Vue JS  
 - **Styling:** Bootstrap, CSS
